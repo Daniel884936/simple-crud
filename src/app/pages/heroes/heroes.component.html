@@ -1,0 +1,74 @@
+<h1>Heroes list</h1>
+<hr>
+
+<div class="row">
+  <div class="col text-right">
+    <button  routerLink="/hero/new" routerLinkActive="router-link-active"  class="btn btn-primary">
+      <i class="fas fa-plus"></i> Add
+    </button>
+  </div>
+</div>
+
+<div *ngIf="!showAlertLoading && heroes.length > 0"
+     class="row mt-5 animate__animated animate__fadeIn animate__faster">
+  <div class="col">
+    <table class="table ">
+      <thead class="thead-dark">
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Power</th>
+          <th>Alive</th>
+          <th>
+            Tools
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let hero of heroes; let i = index">
+          <td scope="row">{{ i + 1 }}</td>
+          <td>{{hero.name}}</td>
+          <td>{{hero.superPower}}</td>
+          <td>
+            <span *ngIf="!hero.alive"
+                  class="badge badge-pill badge-danger">Dead
+            </span>
+            <span *ngIf="hero.alive"
+                  class="badge badge-pill badge-success">Alive
+            </span>
+          </td>
+          <td>
+            <button type="button"
+                    class="btn btn-primary mr-1"
+                    [routerLink]="['/hero',hero.id]">
+              <i class="fas fa-pen    "></i>
+            </button>
+            <button (click)="deleteHero(hero, i)"
+                    type="button" class="btn btn-danger">
+              <i class="fas fa-trash    "></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+<div *ngIf="!showAlertLoading && heroes.length === 0"
+      class="alert alert-warning text-center mt-3" role="alert">
+  <h4 class="alert-heading">No records</h4>
+  <p><i class="fas fa-exclamation fa-2x"></i></p>
+  <p class="mb-0">Please add new record</p>
+</div>
+
+
+<div  *ngIf="showAlertLoading"
+       class="alert alert-info text-center mt-3"
+       role="alert">
+  <h4 class="alert-heading">Loading</h4>
+  <p><i class="fas fa-sync fa-spin fa-2x"></i></p>
+  <p class="mb-0">Please wait</p>
+</div>
+
+

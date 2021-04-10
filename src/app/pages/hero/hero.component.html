@@ -1,0 +1,99 @@
+<h1>Hero <small>Hero name</small></h1>
+<hr>
+
+
+ <div *ngIf="loadingHero" class="position-absolute"  style="top: 20px; left: 50%;">
+    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+  <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
+
+
+<div class="row">
+  <div class="col text-right">
+    <button type="button" routerLink="/heroes" routerLinkActive="router-link-active"  class="btn btn-danger">
+      <i class="fas fa-arrow-left"></i>  Back</button>
+  </div>
+</div>
+
+
+<div class="row animate__animated animate__fadeIn animate__faster">
+  <div class="col">
+
+    <form action="" #form ="ngForm" (ngSubmit)="onSubmit(form)">
+    <div class="form-group">
+      <label class="">Firebase ID</label>
+      <input type="text"
+             name="id"
+             required
+             [(ngModel)]="heroModel.id"
+             disabled
+             class="form-control"
+             placeholder="Firebase ID"
+             aria-describedby="helpId">
+      <small id="helpId" class="text-muted">This is auto generated</small>
+    </div>
+    <div class="form-group">
+      <label class="">Name</label>
+      <input type="text"
+             name="name"
+             [disabled] = "loadingHero"
+             required
+             #name = "ngModel"
+             [class.is-invalid]="name.invalid && name.touched"
+             [(ngModel)]="heroModel.name"
+             class="form-control"
+             placeholder="Hero name"
+             aria-describedby="helpId">
+      <small *ngIf="name.invalid && name.touched" class="text-danger">Name is required</small>
+    </div>
+    <div class="form-group">
+      <label class="">Super power</label>
+      <input type="text"
+             name="superPower"
+             #superPower = "ngModel"
+             [disabled] = "loadingHero"
+             [class.is-invalid]="superPower.invalid && superPower.touched"
+             required
+             [(ngModel)]="heroModel.superPower"
+             class="form-control"
+             placeholder="superPower"
+             aria-describedby="helpId">
+      <small *ngIf="superPower.invalid && superPower.touched" class="text-danger">Power is required</small>
+
+    </div>
+    <div class="form-group">
+      <label class="">Status</label>
+      <br>
+        <button class="btn btn-outline-success w-50 "
+                *ngIf="heroModel.alive"
+                [disabled] = "loadingHero"
+                (click)="heroModel.alive = false"
+                type="button">
+          <i class="fas fa-smile-wink"></i>
+          Alive
+        </button>
+          <button class="btn btn-outline-danger  w-50 "
+                *ngIf="!heroModel.alive"
+                [disabled] = "loadingHero"
+                  (click)="heroModel.alive = true"
+                  type="button">
+          <i class="fas fa-dizzy    "></i>
+          Dead
+        </button>
+      <hr>
+       <div class="form-group text-center">
+        <button class="btn btn-primary w-25"
+                 type="submit"
+                 [disabled] = "loadingHero">
+          <i class="fas fa-save"></i>
+          Save
+        </button>
+      </div>
+
+    </div>
+  </form>
+
+  </div>
+</div>
